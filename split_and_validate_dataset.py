@@ -37,9 +37,9 @@ def main():
     input_file = 'poppy_initial.jsonl'
     train_file = 'poppy_training.jsonl'
     validation_file = 'poppy_validation.jsonl'
-
+    
     split_dataset(input_file, train_file, validation_file)
-
+    
     if validate_jsonl(train_file) and validate_jsonl(validation_file):
         print("Both training and validation files are valid.")
     else:

@@ -15,8 +15,8 @@
   python validate_jsonl.py
   ```
 
-## Split Dataset
-- Split into training and validation sets:
+## Split and Validate Dataset
+- Split into training and validation sets and validate:
   ```bash
   python split_and_validate_dataset.py
   ```
