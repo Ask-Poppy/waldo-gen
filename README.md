@@ -19,8 +19,8 @@ Welcome to the Poppy Dataset Creation Workflow! This guide will help you set up,
 ## Setup Environment
 1. **Clone the Repository**
    ```bash
-   git clone https://github.com/yourusername/poppy.git
-   cd poppy
+   git clone https://github.com/simon-archer/waldo-gen.git
+   cd waldo-gen
    ```
 
 2. **Install Dependencies**
