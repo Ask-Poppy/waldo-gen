@@ -35,71 +35,101 @@ export function SortableMessage({ message, onEdit, onDelete }: SortableMessagePr
 
   const isUser = message.role === 'user';
   const bubbleClass = isUser
-    ? 'bg-blue-600 text-white ml-auto'
+    ? 'bg-blue-600 text-white'
     : 'bg-gray-100 text-gray-800';
 
   return (
     <div
       ref={setNodeRef}
       style={style}
-      className={`flex gap-3 max-w-[80%] ${isUser ? 'ml-auto' : ''} ${
-        isDragging ? 'opacity-50' : ''
-      }`}
+      className={`flex gap-2 group ${
+        isDragging ? 'opacity-70 bg-gray-50' : ''
+      } ${isUser ? 'justify-end' : 'justify-start'} w-full mb-3`}
     >
-      <div
-        {...attributes}
-        {...listeners}
-        className="cursor-grab active:cursor-grabbing flex items-center px-1"
-      >
-        <GripVertical className="w-4 h-4 text-gray-400 hover:text-gray-600" />
-      </div>
-
+      {/* Avatar and handle for assistant messages */}
       {!isUser && (
-        <Bot className="w-8 h-8 text-gray-600 flex-shrink-0 mt-1" />
+        <>
+          <div
+            {...attributes}
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing flex items-center px-1 self-start mt-1 opacity-0 group-hover:opacity-70 hover:opacity-100 transition-opacity"
+          >
+            <GripVertical className="w-3 h-3 text-gray-400" />
+          </div>
+          <Bot className="w-6 h-6 text-gray-600 flex-shrink-0 self-start" />
+        </>
       )}
 
-      <div className="flex flex-col flex-1">
-        <div className={`rounded-2xl px-4 py-2 ${bubbleClass} shadow-sm`}>
+      {/* Message content */}
+      <div className={`flex flex-col max-w-[80%]`}>
+        <div className={`rounded-lg px-3 py-2 ${bubbleClass} ${isEditing ? 'border border-blue-300 ring-1 ring-blue-200' : ''}`}>
           {isEditing ? (
             <textarea
-              className="w-full min-h-[100px] p-2 text-gray-800 rounded border focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full min-h-[60px] p-1 text-gray-800 rounded border-none focus:outline-none text-sm bg-transparent"
               value={editContent}
               onChange={(e) => setEditContent(e.target.value)}
               autoFocus
             />
           ) : (
-            <p className="whitespace-pre-wrap">{message.content}</p>
+            <p className="whitespace-pre-wrap text-sm">{message.content}</p>
           )}
         </div>
-        <div className="flex gap-2 mt-1 text-xs text-gray-500">
-          <button
-            onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-            className="hover:text-blue-600"
-          >
-            {isEditing ? 'Save' : 'Edit'}
-          </button>
-          {isEditing && (
-            <button
-              onClick={() => setIsEditing(false)}
-              className="hover:text-blue-600"
-            >
-              Cancel
-            </button>
+        
+        {/* Message actions */}
+        <div className="flex gap-1 mt-0.5 text-xs">
+          {isEditing ? (
+            <div className="flex gap-1">
+              <button
+                onClick={handleSave}
+                className="text-blue-600 hover:underline"
+              >
+                Save
+              </button>
+              <span className="text-gray-300">•</span>
+              <button
+                onClick={() => setIsEditing(false)}
+                className="text-gray-500 hover:underline"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div className="flex gap-1 text-gray-400 items-center">
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out flex gap-1">
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="hover:text-blue-600"
+                >
+                  Edit
+                </button>
+                <span>•</span>
+                <button
+                  onClick={() => onDelete(message.id)}
+                  className="hover:text-red-600"
+                >
+                  Delete
+                </button>
+              </div>
+              <span className="text-gray-300 text-[10px] ml-1">
+                {new Date(message.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+              </span>
+            </div>
           )}
-          <button
-            onClick={() => onDelete(message.id)}
-            className="hover:text-red-600"
-          >
-            Delete
-          </button>
-          <span className="ml-auto">
-            {new Date(message.timestamp).toLocaleTimeString()}
-          </span>
         </div>
       </div>
 
+      {/* Avatar and handle for user messages */}
       {isUser && (
-        <UserCircle2 className="w-8 h-8 text-blue-600 flex-shrink-0 mt-1" />
+        <>
+          <UserCircle2 className="w-6 h-6 text-blue-600 flex-shrink-0 self-start" />
+          <div
+            {...attributes}
+            {...listeners}
+            className="cursor-grab active:cursor-grabbing flex items-center px-1 self-start mt-1 opacity-0 group-hover:opacity-70 hover:opacity-100 transition-opacity"
+          >
+            <GripVertical className="w-3 h-3 text-gray-400" />
+          </div>
+        </>
       )}
     </div>
   );

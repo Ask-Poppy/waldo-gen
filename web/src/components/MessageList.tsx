@@ -48,7 +48,7 @@ export function MessageList({ messages, onReorder, onEdit, onDelete }: MessageLi
   };
 
   return (
-    <div className="space-y-6">
+    <div className="pt-2 pb-4">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCenter}
@@ -70,10 +70,13 @@ export function MessageList({ messages, onReorder, onEdit, onDelete }: MessageLi
       </DndContext>
       
       {messages.length === 0 && (
-        <div className="text-center text-gray-500 py-8">
+        <div className="text-center text-gray-400 py-8 italic">
           Start your conversation by adding a message below
         </div>
       )}
+      
+      {/* Add padding at the bottom to ensure space when scrolling */}
+      <div className="h-4"></div>
     </div>
   );
 }
