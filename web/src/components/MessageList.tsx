@@ -46,7 +46,6 @@ export function MessageList({ messages, onReorder, onEdit, onDelete }: MessageLi
       onReorder(arrayMove(messages, oldIndex, newIndex));
     }
   };
-
   return (
     <div className="pt-2 pb-4">
       <DndContext
