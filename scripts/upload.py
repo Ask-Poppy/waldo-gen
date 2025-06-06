@@ -6,7 +6,9 @@ import openai
 from validate_jsonl import validate_jsonl
 
 # Initialize OpenAI API - User should replace this with their actual API key
-openai.api_key = 'your-api-key-here'
+openai.api_key = os.getenv('OPENAI_API_KEY')
+if not openai.api_key:
+    raise RuntimeError("OPENAI_API_KEY environment variable not set")
 
 def count_tokens_in_file(file_path):
     """
@@ -110,9 +112,6 @@ def main():
     args = parser.parse_args()
     
     # Check if API key is set
-    if openai.api_key == 'your-api-key-here':
-        print("Error: Please set your OpenAI API key in the script.")
-        return 1
     
     # Validate files before uploading
     print("Validating files before upload...")
