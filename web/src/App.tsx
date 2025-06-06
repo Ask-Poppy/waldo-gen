@@ -111,30 +111,6 @@ function App() {
       };
     });
   };
-
-  const reorderMessages = (newMessages: Message[]) => {
-    setAppState(prev => {
-      const updatedConversations = prev.conversations.map(conv => {
-        if (conv.id === activeConversationId) {
-          return {
-            ...conv,
-            messages: newMessages,
-            lastModified: new Date().toISOString()
-          };
-        }
-        return conv;
-      });
-      
-      return {
-        ...prev,
-        conversations: updatedConversations
-      };
-    });
-  };
-
-  const createConversation = (folderId: string | null = null) => {
-    const newConv: Conversation = {
-      id: crypto.randomUUID(),
       title: `New Conversation`,
       messages: [],
       lastModified: new Date().toISOString(),
@@ -418,7 +394,6 @@ function App() {
             <div className="flex-1 overflow-y-auto bg-white px-1 min-h-0">
               <MessageList
                 messages={currentConversation?.messages || []}
-                onReorder={reorderMessages}
                 onEdit={editMessage}
                 onDelete={deleteMessage}
               />

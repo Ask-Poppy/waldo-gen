@@ -72,7 +72,7 @@ Welcome to the Poppy Dataset Creation Workflow! This guide will help you set up,
 6. **Fine-Tune**: Proceed with model fine-tuning using the prepared datasets.
 
 ## Notes
-- **API Key**: Ensure you have a valid OpenAI API key. Replace the placeholder in `scripts/chat.py` with your actual key.
+- **API Key**: Set your OpenAI API key in the `OPENAI_API_KEY` environment variable before running the scripts.
 - **Data Files**: Keep your dataset files in the `data/` directory.
 - **Regular Validation**: Always validate your data after any modifications to prevent errors during training.
 - **Customization**: For advanced customization, refer to the individual script documentation within the `scripts/` folder.
